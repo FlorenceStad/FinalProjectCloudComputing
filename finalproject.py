@@ -50,7 +50,7 @@ def create_sg(ec2):
         if existing: 
             print("Security group already exists.") 
             return existing[0].group_id 
-        except Exception: 
+    except Exception: 
         print("Security group not found. Creating new one...") 
         
         vpcs = list(ec2.vpcs.filter(Filters=[{"Name": "isDefault", "Values": ["true"]}])) 
@@ -73,14 +73,15 @@ def create_sg(ec2):
             GroupId=sg_id,
             IpPermissions=[
                 {"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "IpRanges": [{'CidrIp': '0.0.0.0/0'}]},
-                 {"IpProtocol": "tcp", "FromPort": 3306, "ToPort": 3306, "IpRanges": [{'CidrIp': '0.0.0.0/0'}]},
-                  {"IpProtocol": "tcp", "FromPort": 8080, "ToPort": 8080, "IpRanges": [{'CidrIp': '0.0.0.0/0'}]},
-                   {"IpProtocol": "tcp", "FromPort": 8081, "ToPort": 8081, "IpRanges": [{'CidrIp': '0.0.0.0/0'}]},
+                {"IpProtocol": "tcp", "FromPort": 3306, "ToPort": 3306, "IpRanges": [{'CidrIp': '0.0.0.0/0'}]},
+                {"IpProtocol": "tcp", "FromPort": 8080, "ToPort": 8080, "IpRanges": [{'CidrIp': '0.0.0.0/0'}]},
+                {"IpProtocol": "tcp", "FromPort": 8081, "ToPort": 8081, "IpRanges": [{'CidrIp': '0.0.0.0/0'}]},
                     ]
                 ) 
         
         print("Ingress rules applied.")
         return sg_id 
+    
     
 def main(keyname): 
     get_keypath(keyname) 
