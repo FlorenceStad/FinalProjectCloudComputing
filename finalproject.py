@@ -82,7 +82,7 @@ def create_sg(ec2):
         print("Ingress rules applied.")
         return sg_id 
     
-    
+
 def main(keyname): 
     get_keypath(keyname) 
     ec2 = boto3.resource("ec2", region_name="us-east-1")
@@ -108,18 +108,18 @@ def main(keyname):
     pip3 install flask requests """ 
     
     # Launch DB nodes
-    db1 = launch_instance(keyname, ec2, sg_id, "t2.micro", "db-manager", mysql_ud)
-    db2 = launch_instance(keyname, ec2, sg_id, "t2.micro", "db-worker-1", mysql_ud)
-    db3 = launch_instance(keyname, ec2, sg_id, "t2.micro", "db-worker-2", mysql_ud) 
+    db1 = launch_instance(keyname, ec2, sg_id, "t3.micro", "db-manager", mysql_ud)
+    db2 = launch_instance(keyname, ec2, sg_id, "t3.micro", "db-worker-1", mysql_ud)
+    db3 = launch_instance(keyname, ec2, sg_id, "t3.micro", "db-worker-2", mysql_ud) 
     
     # Launch proxy + gatekeeper
-    proxy = launch_instance(keyname, ec2, sg_id, "t2.large", "proxy", proxy_ud)
-    gatekeeper = launch_instance(keyname, ec2, sg_id, "t2.large", "gatekeeper", gk_ud) 
+    proxy = launch_instance(keyname, ec2, sg_id, "t3.small", "proxy", proxy_ud)
+    gatekeeper = launch_instance(keyname, ec2, sg_id, "t3.small", "gatekeeper", gk_ud) 
     
     print(" All instances are lanched ")
     
-    if __name__ == "__main__": 
-        parser = argparse.ArgumentParser(description="Launch EC2 instances") 
-        parser.add_argument("--keyname", required=True, help="EC2 key pair name") 
-        args = parser.parse_args() 
-        main(args.keyname)
+if __name__ == "__main__": 
+    parser = argparse.ArgumentParser(description="Launch EC2 instances") 
+    parser.add_argument("--keyname", required=True, help="EC2 key pair name") 
+    args = parser.parse_args() 
+    main(args.keyname)
